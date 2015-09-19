@@ -1,6 +1,5 @@
 {
     "appKeys": {},
-    "capabilities": [ "configurable" ],
     "companyName": "mountainjeww@gmail.com",
     "longName": "SafeTap",
     "projectType": "native",
@@ -24,5 +23,8 @@
     "versionLabel": "1.0",
     "watchapp": {
         "watchface": false
-    }
+    },
+    "capabilities": [
+        "configurable"
+    ],
 }
