@@ -8,6 +8,12 @@ static TextLayer *s_uptime_layer;
 
 static int s_uptime = 0;
 
+static const uint32_t segments[] = { 200, 100, 400 };
+VibePattern pat = {
+  .durations = segments,
+  .num_segments = ARRAY_LENGTH(segments),
+};
+
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   // Use a long-lived buffer
   static char s_uptime_buffer[32];
@@ -26,6 +32,7 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 
   // handle flagging
   if (seconds >= 25 && seconds <= 30) {
+		vibes_enqueue_custom_pattern(pat);
      // warning extension
      if (check_in == false) {
         // not checked
@@ -47,7 +54,10 @@ static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Up");
-  check_in = true;
+	int seconds = s_uptime % 60;
+	if (seconds >= 25 && seconds <= 30) {
+  	check_in = true;
+	}
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
