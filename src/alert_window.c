@@ -39,7 +39,7 @@ static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
   WakeupId s_wakeup_id = wakeup_schedule(future_time, WAKEUP_REASON, true);
   alert_time = 0;
   persist_write_int(PERSIST_KEY_WAKEUP_ID, s_wakeup_id);
-  window_stack_pop_all(true);
+  window_stack_pop(true);
 }
 
 static void click_config_provider(void *context) {
@@ -63,6 +63,7 @@ static void alert_window_load(Window *window) {
 static void alert_window_unload(Window *window) {
   // Destroy output TextLayer
   vibes_cancel();
+  tick_timer_service_unsubscribe();
   text_layer_destroy(s_alert_text_layer);
 }
 
