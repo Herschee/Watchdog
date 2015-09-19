@@ -3,7 +3,7 @@ Pebble.addEventListener('ready', function() {
 });
 
 Pebble.addEventListener('showConfiguration', function() {
-  var url = 'https://cdn.rawgit.com/Herschee/Watchdog/master/settingsPage/index.html';
+  var url = 'https://rawgit.com/Herschee/Watchdog/master/settingsPage/index.html';
   console.log('Showing configuration page: ' + url);
 
   Pebble.openURL(url);
