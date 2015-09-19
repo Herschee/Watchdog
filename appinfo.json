@@ -1,10 +1,18 @@
 {
     "appKeys": {},
+    "capabilities": [
+        "configurable"
+    ],
     "companyName": "mountainjeww@gmail.com",
     "longName": "SafeTap",
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "images/LOGO_144PX_AI.png",
+                "name": "LOGO_144PX",
+                "type": "png"
+            },
             {
                 "file": "images/LOGO_28PX_AI.png",
                 "menuIcon": true,
@@ -23,8 +31,5 @@
     "versionLabel": "1.0",
     "watchapp": {
         "watchface": false
-    },
-    "capabilities": [
-        "configurable"
-    ]
+    }
 }

@@ -2,10 +2,14 @@
   
 #include "main_window.h"
 #include "alert_window.h"
+#include "splash_window.h"
 
 static void init() {
   // Subscribe to Wakeup API
   wakeup_service_subscribe(wakeup_handler);
+  
+  // Launch splash screen
+  //init_splash_window();
   
   // Was this a wakeup launch?
   if (launch_reason() == APP_LAUNCH_WAKEUP) {
@@ -22,6 +26,7 @@ static void init() {
 }
 
 static void deinit() {
+  //deinit_splash_window();
   deinit_main_window();
 }
 
