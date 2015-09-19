@@ -1,7 +1,6 @@
 #include <pebble.h>
 #include "main_window.h"
 #include "alert_window.h"
-#include "time_window.h"
 
 #define NUM_MENU_SECTIONS 3
 #define NUM_FIRST_MENU_ITEMS 1
@@ -93,7 +92,7 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
           if (!wakeup_query(s_wakeup_id, NULL)) {
             // Current time + 30 seconds
             // TODO: alter this time? need to grab that from persistance then
-            time_t future_time = time(NULL) + 5;
+            time_t future_time = calc_future_time();
 
             // Schedule wakeup event and keep the WakeupId
             s_wakeup_id = wakeup_schedule(future_time, WAKEUP_REASON, true);
@@ -118,7 +117,7 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
     case 2:
       switch (cell_index->row) {
         case 0:
-          init_time_window();
+        
           break;
       }
   }
