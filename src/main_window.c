@@ -7,31 +7,9 @@
 #define NUM_FIRST_MENU_ITEMS 1
 #define NUM_SECOND_MENU_ITEMS 1
 #define NUM_THIRD_MENU_ITEMS 1
-
-#define KEY_PHONE   0
-#define KEY_NAME    1
-#define KEY_TIMER   2
-#define KEY_VIBRATE 3
-
-
+  
 static Window *s_main_window;
 static MenuLayer *s_menu_layer;
-
-static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
-  APP_LOG(APP_LOG_LEVEL_INFO, "Message received!");
-}
-
-static void inbox_dropped_callback(AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped!");
-}
-
-static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed!");
-}
-
-static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
-  APP_LOG(APP_LOG_LEVEL_INFO, "Outbox send success!");
-}
 
 static uint16_t menu_get_num_sections_callback(MenuLayer *menu_layer, void *data) {
   return NUM_MENU_SECTIONS;
@@ -182,12 +160,6 @@ void init_main_window(){
     .unload = main_window_unload,
   });
   window_stack_push(s_main_window, true);
-
-  // Register callbacks
-  app_message_register_inbox_received(inbox_received_callback);
-  app_message_register_inbox_dropped(inbox_dropped_callback);
-  app_message_register_outbox_failed(outbox_failed_callback);
-  app_message_register_outbox_sent(outbox_sent_callback);
 }
 
 void deinit_main_window(){
