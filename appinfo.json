@@ -7,10 +7,21 @@
     "longName": "SafeTap",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/LOGO_28PX.png",
+                "menuIcon": true,
+                "name": "LOGO_28PX",
+                "type": "png"
+            }
+        ]
     },
     "sdkVersion": "3",
     "shortName": "SafeTap",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
     "uuid": "5f5f17a3-e475-4f37-88ee-6b31e7dd2f4a",
     "versionLabel": "1.0",
     "watchapp": {
