@@ -2,6 +2,7 @@
 
 static Window *window;
 static TextLayer *text_layer;
+bool check_in = false;
 
 static TextLayer *s_uptime_layer;
 
@@ -24,8 +25,19 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   s_uptime++;
 
   // handle flagging
-  if (seconds >= 24) {
+  if (seconds >= 25 && seconds <= 30) {
      // warning extension
+     if (check_in == false) {
+        // not checked
+     } else {
+        // checked in, reset 
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "Checked in.. reset");
+        s_uptime = 0;
+			  check_in = false;
+     }
+  } else if (seconds > 30 && check_in == false) {
+     // somethings wrong
+     APP_LOG(APP_LOG_LEVEL_DEBUG, "Somethings wrong.");
   }
 }
 
@@ -35,6 +47,7 @@ static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Up");
+  check_in = true;
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
@@ -65,6 +78,7 @@ static void window_unload(Window *window) {
 static void init(void) {
   // Subscribe to TickTimerService
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
+  
   window = window_create();
   window_set_click_config_provider(window, click_config_provider);
   window_set_window_handlers(window, (WindowHandlers) {
