@@ -1,8 +1,6 @@
 {
     "appKeys": {},
-    "capabilities": [
-        "configurable"
-    ],
+    "capabilities": [ "configurable" ],
     "companyName": "mountainjeww@gmail.com",
     "longName": "SafeTap",
     "projectType": "native",
