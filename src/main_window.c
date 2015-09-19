@@ -35,7 +35,7 @@ static void menu_draw_header_callback(GContext* ctx, const Layer *cell_layer, ui
       // nothing above the watch buton
       break;
     case 1:
-      menu_cell_basic_header_draw(ctx, cell_layer, "menu two");
+      // nothing above the stop button
       break;
   }
 }
@@ -56,7 +56,7 @@ static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuI
       switch (cell_index->row) {
         case 0:
           // This is a basic menu item with a title and subtitle
-          menu_cell_basic_draw(ctx, cell_layer, "Basic Item", "With a subtitle", NULL);
+          menu_cell_basic_draw(ctx, cell_layer, "Safe", "Stop the watchdog", NULL);
           break;
       }
   }
@@ -93,7 +93,11 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
     case 1:
       switch (cell_index->row) {
         case 0:
-        
+          // unregister the watchdog
+          if (persist_exists(PERSIST_KEY_WAKEUP_ID)) {
+            s_wakeup_id = persist_read_int(PERSIST_KEY_WAKEUP_ID);
+            wakeup_cancel(s_wakeup_id);
+          }
           break;
       }
   }
