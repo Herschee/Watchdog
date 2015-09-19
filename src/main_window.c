@@ -2,9 +2,10 @@
 #include "main_window.h"
 #include "alert_window.h"
 
-#define NUM_MENU_SECTIONS 2
+#define NUM_MENU_SECTIONS 3
 #define NUM_FIRST_MENU_ITEMS 1
 #define NUM_SECOND_MENU_ITEMS 1
+#define NUM_THIRD_MENU_ITEMS 1
 
 static Window *s_main_window;
 static MenuLayer *s_menu_layer;
@@ -19,6 +20,8 @@ static uint16_t menu_get_num_rows_callback(MenuLayer *menu_layer, uint16_t secti
       return NUM_FIRST_MENU_ITEMS;
     case 1:
       return NUM_SECOND_MENU_ITEMS;
+    case 2:
+      return NUM_THIRD_MENU_ITEMS;
     default:
       return 0;
   }
@@ -36,6 +39,8 @@ static void menu_draw_header_callback(GContext* ctx, const Layer *cell_layer, ui
       break;
     case 1:
       // nothing above the stop button
+    case 2:
+      // nothing above the time button
       break;
   }
 }
@@ -59,8 +64,17 @@ static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuI
           menu_cell_basic_draw(ctx, cell_layer, "Safe", "Stop the watchdog", NULL);
           break;
       }
+    break;
+    case 2:
+      switch (cell_index->row) {
+        case 0:
+        
+        menu_cell_basic_draw(ctx, cell_layer, "Check_In Time", "Time Until Check-In", NULL);
+        break;
+      }
+      }
   }
-}
+
 
 static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *data) {
   // Determine which section we're responding to
@@ -98,6 +112,12 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
             s_wakeup_id = persist_read_int(PERSIST_KEY_WAKEUP_ID);
             wakeup_cancel(s_wakeup_id);
           }
+          break;
+      }
+    case 2:
+      switch (cell_index->row) {
+        case 0:
+        
           break;
       }
   }
