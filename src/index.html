@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Slate Example Configuration</title>
+  <link rel='stylesheet' type='text/css' href='css/slate.min.css'>
+  <script src='js/slate.min.js'></script>
+  <style>
+  .title {
+    padding: 15px 10px;
+    text-transform: uppercase;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #888888;
+    text-align: center;
+  }
+  </style>
+  </head>
+
+  <body>
+    <h1 class='title'>SafeTap Settings</h1>
+
+    <div class='item-container'>
+      <div class='item-container-content'>
+        <div class='item'>
+          Use this configuration page to choose the settings you would like applied to this app.
+        </div>
+      </div>
+    </div>
+
+    <div class="item-container">
+    <div class="item-container-header">Phone Number</div>
+
+      <div class="item-container-content">
+        <label class="item">
+          <div class="item-input-wrapper">
+            <input type="text" class="item-input" name="input-1" placeholder="Phone Number">
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="item-container">
+    <div class="item-container-header">Countdown Timer Value</div>
+    <div class="item-container-content">
+      <label class="item">
+        30 seconds
+        <input type="radio" class="item-radio" name="radio-1" value="1" checked>
+      </label>
+      <label class="item">
+        1 minute
+        <input type="radio" class="item-radio" name="radio-1" value="2">
+      </label>
+      <label class="item">
+        5 minutes
+        <input type="radio" class="item-radio" name="radio-1" value="3">
+      </label>
+    </div>
+  </div>
+
+    <div class="item-container">
+    <div class="item-container-header">Vibration Timer Length</div>
+    <div class="item-container-content">
+      <label class="item">
+        15 seconds
+        <input type="radio" class="item-radio" name="radio-2" value="1" checked>
+      </label>
+      <label class="item">
+        30 seconds
+        <input type="radio" class="item-radio" name="radio-2" value="2">
+      </label>
+      <label class="item">
+        1 minute
+        <input type="radio" class="item-radio" name="radio-2" value="3">
+      </label>
+    </div>
+  </div>
+
+    <div class='item-container'>
+      <div class='button-container'>
+        <input id='submit_button' type='button' class='item-button' value='SUBMIT'>
+      </div>
+    </div>
+  </body>
+  <script>
+  function getConfigData() {
+    var backgroundColorPicker = document.getElementById('background_color_picker');
+    var highContrastCheckbox = document.getElementById('high_contrast_checkbox');
+ 
+    var options = {
+      'background_color': backgroundColorPicker.value,
+      'high_contrast': highContrastCheckbox.checked
+    };
+
+    // Save for next launch
+    localStorage['background_color'] = options['background_color'];
+    localStorage['high_contrast'] = options['high_contrast'];
+
+    console.log('Got options: ' + JSON.stringify(options));
+    return options;
+  }
+
+  function getQueryParam(variable, defaultValue) {
+    var query = location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      if (pair[0] === variable) {
+        return decodeURIComponent(pair[1]);
+      }
+    }
+    return defaultValue || false;
+  }
+ 
+  var submitButton = document.getElementById('submit_button');
+  submitButton.addEventListener('click', function() {
+    console.log('Submit');
+
+    // Set the return URL depending on the runtime environment
+    var return_to = getQueryParam('return_to', 'pebblejs://close#');
+    document.location = return_to + encodeURIComponent(JSON.stringify(getConfigData()));
+  });
+
+  (function() {
+    var backgroundColorPicker = document.getElementById('background_color_picker');
+    var highContrastCheckbox = document.getElementById('high_contrast_checkbox');
+
+    // Load any previously saved configuration, if available
+    if(localStorage['high_contrast']) {
+      highContrastCheckbox.checked = JSON.parse(localStorage['high_contrast']);
+      backgroundColorPicker.value = localStorage['background_color'];
+    }
+  })();
+  </script>
+</html>
