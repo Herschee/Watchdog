@@ -11,6 +11,29 @@
   
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
   APP_LOG(APP_LOG_LEVEL_INFO, "Message received!");
+  Tuple *t = dict_read_first(iterator);
+
+  // Process all pairs present
+  while(t != NULL) {
+    // Process this pair's key
+    switch (t->key) {
+      case KEY_PHONE:
+        // not sure what to do with this yet
+        break;
+      case KEY_NAME:
+        // not sure what to do with this yet
+        break;
+      case KEY_TIMER:
+        persist_write_int(PERSIST_KEY_INTERVAL_TIME, t->value->int32);
+        break;
+      case KEY_VIBRATE:
+        persist_write_int(PERSIST_KEY_BUZZ_TIME, t->value->int32);
+        break;
+    }
+
+    // Get next pair, if any
+    t = dict_read_next(iterator);
+  }
 }
 
 static void inbox_dropped_callback(AppMessageResult reason, void *context) {
