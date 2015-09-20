@@ -14,13 +14,13 @@
     "resources": {
         "media": [
             {
-                "file": "images/watch_start144.png",
-                "name": "WATCH_ACTV_144PX",
+                "file": "images/LOGO_144PX_AI.png",
+                "name": "LOGO_144PX",
                 "type": "png"
             },
             {
-                "file": "images/LOGO_144PX_AI.png",
-                "name": "LOGO_144PX",
+                "file": "images/watch_start144.png",
+                "name": "WATCH_ACTV_144PX",
                 "type": "png"
             },
             {
