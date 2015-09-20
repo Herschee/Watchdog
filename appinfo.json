@@ -14,8 +14,9 @@
     "resources": {
         "media": [
             {
-                "file": "images/watch_end144.png",
-                "name": "WATCH_END_144PX",
+                "file": "images/LOGO_28PX_AI.png",
+                "menuIcon": true,
+                "name": "LOGO_28PX",
                 "type": "png"
             },
             {
@@ -29,9 +30,8 @@
                 "type": "png"
             },
             {
-                "file": "images/LOGO_28PX_AI.png",
-                "menuIcon": true,
-                "name": "LOGO_28PX",
+                "file": "images/watch_end144.png",
+                "name": "WATCH_END_144PX",
                 "type": "png"
             }
         ]
