@@ -42,8 +42,8 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
     // Write data
     char buff[100];
     if(persist_exists(PERSIST_KEY_PHONE_NUMBER)){
-      persist_read_string(PERSIST_KEY_BUZZ_TIME, buff, 100);
-      dict_write_cstring(iterator, PERSIST_KEY_BUZZ_TIME, buff);
+      persist_read_string(PERSIST_KEY_PHONE_NUMBER, buff, 100);
+      dict_write_cstring(iterator, PERSIST_KEY_PHONE_NUMBER, buff);
     }
     if(persist_exists(PERSIST_KEY_NAME)){
       persist_read_string(PERSIST_KEY_NAME, buff, 100);
