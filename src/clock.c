@@ -4,12 +4,60 @@
 #include "alert_window.h"
 #include "splash_window.h"
 
+#define KEY_PHONE   0
+#define KEY_NAME    1
+#define KEY_TIMER   2
+#define KEY_VIBRATE 3
+  
+static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
+  APP_LOG(APP_LOG_LEVEL_INFO, "Message received!");
+  Tuple *t = dict_read_first(iterator);
+
+  // Process all pairs present
+  while(t != NULL) {
+    // Process this pair's key
+    switch (t->key) {
+      case KEY_PHONE:
+        persist_write_string(PERSIST_KEY_PHONE_NUMBER, t->value->cstring);
+        break;
+      case KEY_NAME:
+        persist_write_string(PERSIST_KEY_NAME, t->value->cstring);
+        break;
+      case KEY_TIMER:
+        persist_write_int(PERSIST_KEY_INTERVAL_TIME, t->value->int32);
+        break;
+      case KEY_VIBRATE:
+        persist_write_int(PERSIST_KEY_BUZZ_TIME, t->value->int32);
+        break;
+    }
+
+    // Get next pair, if any
+    t = dict_read_next(iterator);
+  }
+}
+
+static void inbox_dropped_callback(AppMessageResult reason, void *context) {
+  APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped!");
+}
+
+static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResult reason, void *context) {
+  APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed!");
+}
+
+static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
+  APP_LOG(APP_LOG_LEVEL_INFO, "Outbox send success!");
+}
+
 static void init() {
   // Subscribe to Wakeup API
   wakeup_service_subscribe(wakeup_handler);
   
-  // Launch the splash page
-  init_splash_window();
+  // Register callbacks
+  app_message_register_inbox_received(inbox_received_callback);
+  app_message_register_inbox_dropped(inbox_dropped_callback);
+  app_message_register_outbox_failed(outbox_failed_callback);
+  app_message_register_outbox_sent(outbox_sent_callback);
+  app_message_open(400,400);
   
   // Was this a wakeup launch?
   if (launch_reason() == APP_LAUNCH_WAKEUP) {
@@ -21,12 +69,15 @@ static void init() {
     wakeup_get_launch_event(&id, &reason);
     wakeup_handler(id, reason);
   } else {
+    // Launch main page
     init_main_window();
+    
+    // Launch the splash page
+    init_splash_window();
   }
 }
 
 static void deinit() {
-  deinit_splash_window();
   deinit_main_window();
 }
 

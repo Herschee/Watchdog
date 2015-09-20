@@ -34,6 +34,24 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
     tick_timer_service_unsubscribe();
     vibes_cancel();
     text_layer_set_text(s_alert_text_layer, "Timout Reached\n:(");
+    
+    // Prepare dictionary
+    DictionaryIterator *iterator;
+    app_message_outbox_begin(&iterator);
+    
+    // Write data
+    char buff[100];
+    if(persist_exists(PERSIST_KEY_PHONE_NUMBER)){
+      persist_read_string(PERSIST_KEY_PHONE_NUMBER, buff, 100);
+      dict_write_cstring(iterator, PERSIST_KEY_PHONE_NUMBER, buff);
+    }
+    if(persist_exists(PERSIST_KEY_NAME)){
+      persist_read_string(PERSIST_KEY_NAME, buff, 100);
+      dict_write_cstring(iterator, PERSIST_KEY_NAME, buff);
+    }
+    // Send the data!
+    app_message_outbox_send();
+    
   } else {
     snprintf(s_uptime_buffer, sizeof(s_uptime_buffer), BANNER_TEXT "\n" CLOCK_FORMAT_STRING, 
              alert_time/60, alert_time%60);

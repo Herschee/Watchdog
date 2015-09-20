@@ -2,36 +2,16 @@
 #include "main_window.h"
 #include "alert_window.h"
 #include "time_window.h"
+#include "watch_actv_window.h"
+#include "watch_end_window.h"
 
 #define NUM_MENU_SECTIONS 3
 #define NUM_FIRST_MENU_ITEMS 1
 #define NUM_SECOND_MENU_ITEMS 1
 #define NUM_THIRD_MENU_ITEMS 1
-
-#define KEY_PHONE   0
-#define KEY_NAME    1
-#define KEY_TIMER   2
-#define KEY_VIBRATE 3
-
-
+  
 static Window *s_main_window;
 static MenuLayer *s_menu_layer;
-
-static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
-  APP_LOG(APP_LOG_LEVEL_INFO, "Message received!");
-}
-
-static void inbox_dropped_callback(AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped!");
-}
-
-static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed!");
-}
-
-static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
-  APP_LOG(APP_LOG_LEVEL_INFO, "Outbox send success!");
-}
 
 static uint16_t menu_get_num_sections_callback(MenuLayer *menu_layer, void *data) {
   return NUM_MENU_SECTIONS;
@@ -110,6 +90,9 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
           // schedule the watchdog
           if (persist_exists(PERSIST_KEY_WAKEUP_ID)) {
             s_wakeup_id = persist_read_int(PERSIST_KEY_WAKEUP_ID);
+            
+            // Push the 'Watch Activated' Window onto the stack
+            init_watch_actv_window();
           }
           //Check the event is not already scheduled
           if (!wakeup_query(s_wakeup_id, NULL)) {
@@ -132,6 +115,9 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
         case 0:
           // unregister the watchdog
           if (persist_exists(PERSIST_KEY_WAKEUP_ID)) {
+            // Push the 'Watch Completed' Window onto the stack
+            init_watch_end_window();
+            
             s_wakeup_id = persist_read_int(PERSIST_KEY_WAKEUP_ID);
             wakeup_cancel(s_wakeup_id);
           }
@@ -182,12 +168,6 @@ void init_main_window(){
     .unload = main_window_unload,
   });
   window_stack_push(s_main_window, true);
-
-  // Register callbacks
-  app_message_register_inbox_received(inbox_received_callback);
-  app_message_register_inbox_dropped(inbox_dropped_callback);
-  app_message_register_outbox_failed(outbox_failed_callback);
-  app_message_register_outbox_sent(outbox_sent_callback);
 }
 
 void deinit_main_window(){
