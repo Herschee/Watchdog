@@ -3,6 +3,7 @@
 #include "alert_window.h"
 #include "time_window.h"
 #include "watch_actv_window.h"
+#include "watch_end_window.h"
 
 #define NUM_MENU_SECTIONS 3
 #define NUM_FIRST_MENU_ITEMS 1
@@ -89,6 +90,8 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
           // schedule the watchdog
           if (persist_exists(PERSIST_KEY_WAKEUP_ID)) {
             s_wakeup_id = persist_read_int(PERSIST_KEY_WAKEUP_ID);
+            
+            // Push the 'Watch Activated' Window onto the stack
             init_watch_actv_window();
           }
           //Check the event is not already scheduled
@@ -112,6 +115,9 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
         case 0:
           // unregister the watchdog
           if (persist_exists(PERSIST_KEY_WAKEUP_ID)) {
+            // Push the 'Watch Completed' Window onto the stack
+            init_watch_end_window();
+            
             s_wakeup_id = persist_read_int(PERSIST_KEY_WAKEUP_ID);
             wakeup_cancel(s_wakeup_id);
           }

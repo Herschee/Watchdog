@@ -6,7 +6,7 @@
 
 #define PERSIST_KEY_INTERVAL_TIME 41
 // TODO increase
-#define DEFAULT_INTERVAL_TIME 5
+#define DEFAULT_INTERVAL_TIME 30
 
 #define PERSIST_KEY_BUZZ_TIME 40
 // TODO increase
