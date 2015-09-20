@@ -9,8 +9,6 @@
 static Window *s_time_window;
 static TextLayer *s_time_text_layer;
 
-//bool continue_countdown = false;
-
 
 static int curr_time = 0;
 

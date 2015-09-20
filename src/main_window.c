@@ -2,12 +2,13 @@
 #include "main_window.h"
 #include "alert_window.h"
 #include "time_window.h"
+#include "watch_actv_window.h"
 
 #define NUM_MENU_SECTIONS 3
 #define NUM_FIRST_MENU_ITEMS 1
 #define NUM_SECOND_MENU_ITEMS 1
 #define NUM_THIRD_MENU_ITEMS 1
-
+  
 static Window *s_main_window;
 static MenuLayer *s_menu_layer;
 
@@ -88,6 +89,8 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
           // schedule the watchdog
           if (persist_exists(PERSIST_KEY_WAKEUP_ID)) {
             s_wakeup_id = persist_read_int(PERSIST_KEY_WAKEUP_ID);
+            init_time_window();
+            init_watch_actv_window();
           }
           //Check the event is not already scheduled
           if (!wakeup_query(s_wakeup_id, NULL)) {
@@ -98,6 +101,8 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
             // Schedule wakeup event and keep the WakeupId
             s_wakeup_id = wakeup_schedule(future_time, WAKEUP_REASON, true);
             persist_write_int(PERSIST_KEY_WAKEUP_ID, s_wakeup_id);
+            
+            
 
           } else {
             // TODO: reschedule wakeup?
@@ -118,9 +123,7 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
     case 2:
       switch (cell_index->row) {
         case 0:
-          
           init_time_window();
-          
           break;
       }
   }

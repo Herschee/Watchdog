@@ -34,6 +34,19 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
     tick_timer_service_unsubscribe();
     vibes_cancel();
     text_layer_set_text(s_alert_text_layer, "Timout Reached\n:(");
+    
+    // Prepare dictionary
+    DictionaryIterator *iterator;
+    app_message_outbox_begin(&iterator);
+    
+    // Write data
+    // we don't care what is in here, we may want to put the name of the person or the phone number
+    int key = 78;
+    int value = 2113;
+    dict_write_int(iterator, key, &value, sizeof(int), true /* signed */);
+    // Send the data!
+    app_message_outbox_send();
+    
   } else {
     snprintf(s_uptime_buffer, sizeof(s_uptime_buffer), BANNER_TEXT "\n" CLOCK_FORMAT_STRING, 
              alert_time/60, alert_time%60);
