@@ -181,6 +181,34 @@
       name.value = localStorage['name'];
       phone.value = localStorage['phone'];
     }
+    
+    if (localStorage['timer'] == 30) {
+      r11.checked = true;
+      r12.checked = false;
+      r13.checked = false;
+    } else if (localStorage['timer'] == 60) {
+      r12.checked = true;
+      r11.checked = false;
+      r13.checked = false;
+    } else {
+      r13.checked = true;
+      r11.checked = false;
+      r12.checked = false;
+    }
+    
+    if (localStorage['vibrate'] == 15) {
+      r21.checked = true;
+      r22.checked = false;
+      r23.checked = false;
+    } else if (localStorage['vibrate'] == 30) {
+      r22.checked = true;
+      r21.checked = false;
+      r23.checked = false;
+    } else {
+      r23.checked = true;
+      r21.checked = false;
+      r22.checked = false;
+    }
   })();
 
   </script>
