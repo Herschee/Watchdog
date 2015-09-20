@@ -18,7 +18,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     // Process this pair's key
     switch (t->key) {
       case KEY_PHONE:
-        persist_write_string(PERSIST_KEY_NAME, t->value->cstring);
+        persist_write_string(PERSIST_KEY_PHONE_NUMBER, t->value->cstring);
         break;
       case KEY_NAME:
         persist_write_string(PERSIST_KEY_NAME, t->value->cstring);

@@ -40,11 +40,6 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
     app_message_outbox_begin(&iterator);
     
     // Write data
-    // we don't care what is in here, we may want to put the name of the person or the phone number
-    int key = 78;
-    int value = 2113;
-    dict_write_int(iterator, key, &value, sizeof(int), true /* signed */);
-    
     char buff[100];
     if(persist_exists(PERSIST_KEY_PHONE_NUMBER)){
       persist_read_string(PERSIST_KEY_BUZZ_TIME, buff, 100);
