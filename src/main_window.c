@@ -56,7 +56,7 @@ static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuI
       switch (cell_index->row) { //NUM_FIRST_MENU_ITEMS
         case 0:
           // draw the watch button
-          menu_cell_basic_draw(ctx, cell_layer, "Watch", "Start the watchdog", NULL);
+          menu_cell_basic_draw(ctx, cell_layer, "Watch", "Start the WatchDog", NULL);
           break;
       }
       break;
@@ -64,7 +64,7 @@ static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuI
       switch (cell_index->row) {
         case 0:
           // This is a basic menu item with a title and subtitle
-          menu_cell_basic_draw(ctx, cell_layer, "Safe", "Stop the watchdog", NULL);
+          menu_cell_basic_draw(ctx, cell_layer, "Safe", "Stop the WatchDog", NULL);
           break;
       }
     break;
@@ -72,7 +72,7 @@ static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuI
       switch (cell_index->row) {
         case 0:
         
-        menu_cell_basic_draw(ctx, cell_layer, "Check_In Time", "Time Until Check-In", NULL);
+        menu_cell_basic_draw(ctx, cell_layer, "Check-In Time", "Time Until Check-In", NULL);
         break;
       }
       }
@@ -91,7 +91,8 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
           if (persist_exists(PERSIST_KEY_WAKEUP_ID)) {
             s_wakeup_id = persist_read_int(PERSIST_KEY_WAKEUP_ID);
             
-            // Push the 'Watch Activated' Window onto the stack
+            // Push the Time Window and 'Watch Activated' Window onto the stack
+            init_time_window();
             init_watch_actv_window();
           }
           //Check the event is not already scheduled
