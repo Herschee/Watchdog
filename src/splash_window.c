@@ -2,7 +2,7 @@
 #include "splash_window.h"
   
 // Amount of time, in milliseconds, to flash splash window
-#define SPLASH_TIME 1000
+#define SPLASH_TIME 750
 
 // Defining a Window object
 static Window *s_splash_window;
