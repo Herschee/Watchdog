@@ -1,13 +1,28 @@
 {
-    "appKeys": {},
+    "appKeys": {
+        "KEY_NAME": 1,
+        "KEY_PHONE": 0,
+        "KEY_TIMER": 2,
+        "KEY_VIBRATE": 3
+    },
     "capabilities": [
-        ""
+        "configurable"
     ],
     "companyName": "mountainjeww@gmail.com",
     "longName": "SafeTap",
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "images/watch_start144.png",
+                "name": "WATCH_ACTV_144PX",
+                "type": "png"
+            },
+            {
+                "file": "images/LOGO_144PX_AI.png",
+                "name": "LOGO_144PX",
+                "type": "png"
+            },
             {
                 "file": "images/LOGO_28PX_AI.png",
                 "menuIcon": true,
